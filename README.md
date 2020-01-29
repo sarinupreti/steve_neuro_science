@@ -1,4 +1,3 @@
-# steve_beaudoin
 
 A new Flutter project.
 
