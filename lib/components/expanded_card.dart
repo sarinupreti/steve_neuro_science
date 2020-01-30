@@ -2,17 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// This widget displays the single menu section of the [MainMenuWidget].
-///
-/// There are three main sections, as loaded from the menu.json file in the
-/// assets folder.
-/// Each section has a backgroundColor, an titleColor, a background Flare asset,
-/// and a list of elements it needs to display when expanded.
-///
-/// Since this widget expands and contracts when tapped, it needs to maintain a [State].
-///
-///
-
 typedef NavigateTo(String item);
 
 class ExpandedCard extends StatefulWidget {
@@ -26,6 +15,7 @@ class ExpandedCard extends StatefulWidget {
   final void Function() navigateTo;
   final bool isActive;
   final Color gradientColor;
+  final String imageUrl;
 
   ExpandedCard(
       {this.title,
@@ -37,7 +27,8 @@ class ExpandedCard extends StatefulWidget {
       this.isActive,
       this.assetId,
       Key key,
-      this.gradientColor})
+      this.gradientColor,
+      this.imageUrl})
       : super(key: key);
 
   @override
@@ -141,7 +132,8 @@ class _SectionState extends State<ExpandedCard>
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: NetworkImage(
-                                      "https://static1.squarespace.com/static/56df0f29a3360c18d09a4e8c/591dcd0ef5e231aa972579e8/5bd8be6940ec9ab5572f5e12/1540933145337/brain.gif?format=1500w",
+                                      widget.imageUrl ??
+                                          "https://static1.squarespace.com/static/56df0f29a3360c18d09a4e8c/591dcd0ef5e231aa972579e8/5bd8be6940ec9ab5572f5e12/1540933145337/brain.gif?format=1500w",
                                     )),
                                 gradient: LinearGradient(
                                     begin: Alignment.topRight,
@@ -201,16 +193,17 @@ class _SectionState extends State<ExpandedCard>
                                                   child: Container(
                                                       margin: EdgeInsets.only(
                                                           bottom: 20.0),
-                                                      child: Text(
-                                                        item ?? "",
-                                                        style: TextStyle(
-                                                            color: widget
-                                                                .titleColor,
-                                                            fontSize: 20.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ))),
+                                                      child: Text(item ?? "",
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            textStyle: TextStyle(
+                                                                color: widget
+                                                                    .titleColor,
+                                                                fontSize: 20.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )))),
                                               Container(
                                                   alignment: Alignment.center,
                                                   child: Icon(
