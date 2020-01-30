@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steve_beaudoin/components/expanded_card.dart';
 import 'package:steve_beaudoin/components/title.dart';
+import 'package:steve_beaudoin/screens/details_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -91,7 +92,13 @@ class HomePage extends StatelessWidget {
                           titleColor: Colors.white,
                           menuOptions: ["Introduction", "history", "Types"],
                           subTitles: ["Introduction", "history", "Types"],
-                          navigateTo: () {},
+                          navigateTo: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailsPage()),
+                            );
+                          },
                           assetId: "1",
                         );
                       }),

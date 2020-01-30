@@ -114,7 +114,10 @@ class _SectionState extends State<ExpandedCard>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: _toggleExpand,
+        onTap: () {
+          widget.menuOptions.length > 0 ? widget.navigateTo : null;
+          _toggleExpand();
+        },
         child: Container(
             margin: EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
