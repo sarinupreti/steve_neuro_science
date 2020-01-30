@@ -3,7 +3,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steve_beaudoin/components/expanded_card.dart';
 import 'package:steve_beaudoin/components/title.dart';
-import 'package:steve_beaudoin/utils/gradient.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -84,46 +83,20 @@ class HomePage extends StatelessWidget {
                 child: Container(
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                      itemCount: 20,
+                      itemCount: 10,
                       itemBuilder: (BuildContext context, int index) {
                         return ExpandedCard(
-                          title: "Neuro Science",
-                          // color: Color(0xffFF6A00),
-                          listColor: [Color(0xffEE3979), Color(0xffFF1A00)],
+                          title: "Neuro Since",
+                          backgroundColor: Colors.red,
+                          titleColor: Colors.white,
+                          menuOptions: ["Introduction", "history", "Types"],
+                          subTitles: ["Introduction", "history", "Types"],
+                          navigateTo: () {},
+                          assetId: "1",
                         );
                       }),
                 ),
               ),
-              // ExpandedCard(
-              //   title: "Brain Tumour",
-              // ),
-              // ExpandedCard(
-              //   title: "Neuro Science",
-              //   color: Color(0xffFF6A00),
-              // ),
-              // ExpandedCard(
-              //   title: "Neuro Science",
-              // ),
-              // ExpandedCard(
-              //   title: "Brain Tumour",
-              // ),
-              // ExpandedCard(
-              //   title: "Neuro Science",
-              //   color: Color(0xffFF6A00),
-              // ),
-              // ExpandedCard(
-              //   title: "Neuro Science",
-              // ),
-              // ExpandedCard(
-              //   title: "Brain Tumour",
-              // ),
-              // ExpandedCard(
-              //   title: "Neuro Science",
-              //   color: Color(0xffFF6A00),
-              // ),
-              // ExpandedCard(
-              //   title: "Neuro Science",
-              // )
             ],
           ),
         ),
