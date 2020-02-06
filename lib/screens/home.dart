@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steve_beaudoin/components/expanded_card.dart';
 import 'package:steve_beaudoin/components/title.dart';
 import 'package:steve_beaudoin/screens/details_page.dart';
+import 'package:steve_beaudoin/screens/notifications/notification_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        width: 1080, height: 1920, allowFontScaling: false);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -22,10 +27,18 @@ class HomePage extends StatelessWidget {
                 color: Colors.black, letterSpacing: 1.5, fontSize: 20),
           ),
         ),
-        leading: Icon(
-          FontAwesome.bell_o,
-          color: Colors.grey,
-          size: 20,
+        leading: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NotificationScreen()),
+            );
+          },
+          child: Icon(
+            FontAwesome.bell_o,
+            color: Colors.grey,
+            size: 20,
+          ),
         ),
         actions: <Widget>[
           Padding(
