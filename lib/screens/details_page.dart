@@ -54,18 +54,31 @@ class DetailsPage extends StatelessWidget {
                                 TextStyle(color: Colors.black, fontSize: 16)),
                       ),
                       SizedBox(height: 20),
-                      Row(
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: new BorderRadius.circular(8.0),
-                            child: Image.network(
+                      Container(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            Image.network(
                               "https://d1t0xk6rn1avc6.cloudfront.net/wp-content/uploads/STRESS-750x450.jpg",
-                              height: 250.0,
-                              width: MediaQuery.of(context).size.width - 40,
+                              height: 200,
                               fit: BoxFit.cover,
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 10),
+                            Image.network(
+                              "https://d1t0xk6rn1avc6.cloudfront.net/wp-content/uploads/STRESS-750x450.jpg",
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
+                            SizedBox(width: 10),
+                            Image.network(
+                              "https://d1t0xk6rn1avc6.cloudfront.net/wp-content/uploads/STRESS-750x450.jpg",
+                              height: 200,
+                              fit: BoxFit.cover,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(height: 20),
                       Text(
@@ -75,16 +88,6 @@ class DetailsPage extends StatelessWidget {
                             textStyle:
                                 TextStyle(color: Colors.black, fontSize: 16)),
                       ),
-                      // ListView(
-                      //   scrollDirection: Axis.horizontal,
-                      //   children: <Widget>[
-                      //     Image.network(
-                      //       "https://d1t0xk6rn1avc6.cloudfront.net/wp-content/uploads/STRESS-750x450.jpg",
-                      //       height: 100,
-                      //       fit: BoxFit.cover,
-                      //     )
-                      //   ],
-                      // )
                     ],
                   )),
             ])),
