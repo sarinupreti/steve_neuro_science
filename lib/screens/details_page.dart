@@ -24,7 +24,7 @@ class DetailsPage extends StatelessWidget {
                   centerTitle: true,
                   title: Text('',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.grey,
                         fontSize: 16.0,
                       )),
                   background: Image.network(

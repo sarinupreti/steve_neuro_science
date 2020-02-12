@@ -1,14 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steve_beaudoin/components/expanded_card.dart';
 import 'package:steve_beaudoin/components/title.dart';
+import 'package:steve_beaudoin/database/database.dart';
 import 'package:steve_beaudoin/screens/details_page.dart';
 import 'package:steve_beaudoin/screens/notifications/notification_screen.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Stream<QuerySnapshot> getAllTopics;
+
+  @override
+  void initState() {
+    getAllTopics = DatabaseService().getAllTopics;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,24 +111,38 @@ class HomePage extends StatelessWidget {
               Expanded(
                 child: Container(
                   height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ExpandedCard(
-                          title: "Neuro Since",
-                          backgroundColor: Colors.red,
-                          titleColor: Colors.white,
-                          menuOptions: ["Introduction", "history", "Types"],
-                          subTitles: ["Introduction", "history", "Types"],
-                          navigateTo: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DetailsPage()),
-                            );
-                          },
-                          assetId: "1",
-                        );
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: getAllTopics,
+                      builder: (context, snapshot) {
+                        print("STREAM BEING CALLED AGAIN AND AGAIN");
+
+                        if (!snapshot.hasData) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: Center(child: CircularProgressIndicator()),
+                          );
+                        } else if (snapshot.hasError) {
+                          return null;
+                        } else {
+                          return ListView.builder(
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (context, index) {
+                                final collectionData = snapshot
+                                    .data.documents[index].data["topicHeader"];
+
+                                print(collectionData);
+
+                                return ExpandedCard(
+                                  title: collectionData["title"],
+                                  backgroundColor: Colors.red,
+                                  imageUrl: collectionData["imageUrl"],
+                                  titleColor: Colors.white,
+                                  subTopics: collectionData["subTopics"],
+                                  assetId: "1",
+                                );
+                              });
+                        }
                       }),
                 ),
               ),

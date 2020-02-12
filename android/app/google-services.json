@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1097751088778",
+    "firebase_url": "https://steve-neuro-science.firebaseio.com",
+    "project_id": "steve-neuro-science",
+    "storage_bucket": "steve-neuro-science.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097751088778:android:87e3a5bfd6889b422fa773",
+        "android_client_info": {
+          "package_name": "com.example.steve_beaudoin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097751088778-ciu710rla8mng1mbf537f5c1cj2b2s1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP84vzMxLN99ENsPyfEUuTatg8EmQgt24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097751088778-ciu710rla8mng1mbf537f5c1cj2b2s1h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

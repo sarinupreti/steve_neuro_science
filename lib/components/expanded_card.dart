@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:steve_beaudoin/models/sub_topics.dart';
+import 'package:steve_beaudoin/screens/details_page.dart';
 
 typedef NavigateTo(String item);
 
@@ -10,7 +12,7 @@ class ExpandedCard extends StatefulWidget {
   final Color backgroundColor;
   final Color titleColor;
   final List<String> subTitles;
-  final List<String> menuOptions;
+  final List<dynamic> subTopics;
   final String assetId;
   final void Function() navigateTo;
   final bool isActive;
@@ -22,7 +24,7 @@ class ExpandedCard extends StatefulWidget {
       this.backgroundColor,
       this.titleColor,
       this.subTitles,
-      this.menuOptions,
+      this.subTopics,
       this.navigateTo,
       this.isActive,
       this.assetId,
@@ -115,7 +117,7 @@ class _SectionState extends State<ExpandedCard>
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          widget.menuOptions.length > 0 ? widget.navigateTo : null;
+          widget.subTopics.length > 0 ? widget.navigateTo : null;
           _toggleExpand();
         },
         child: Container(
@@ -180,44 +182,71 @@ class _SectionState extends State<ExpandedCard>
                           axis: Axis.vertical,
                           sizeFactor: _sizeAnimation,
                           child: Container(
-                              child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 56.0, right: 20.0, top: 10.0),
-                                  child: Column(
-                                      children: widget.menuOptions.map((item) {
-                                    return GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: widget.navigateTo,
-                                        child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                  child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          bottom: 20.0),
-                                                      child: Text(item ?? "",
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            textStyle: TextStyle(
-                                                                color: widget
-                                                                    .titleColor,
-                                                                fontSize: 20.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          )))),
-                                              Container(
-                                                  alignment: Alignment.center,
-                                                  child: Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    color: Colors.white,
-                                                    size: 22.0,
-                                                  ))
-                                            ]));
-                                  }).toList()))))
+                              child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: widget.subTopics.map((x) {
+                              print(x);
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: SubTopicList(
+                                  data: x,
+                                ),
+                              );
+                            }).toList(),
+                          )))
                     ]),
                   ],
                 ))));
+  }
+}
+
+class SubTopicList extends StatefulWidget {
+  const SubTopicList({Key key, this.data}) : super(key: key);
+
+  final data;
+
+  @override
+  _SubTopicListState createState() => _SubTopicListState();
+}
+
+class _SubTopicListState extends State<SubTopicList> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.only(left: 56.0, right: 20.0, top: 10.0),
+        child: Column(
+          children: <Widget>[
+            GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DetailsPage()),
+                  );
+                },
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: Container(
+                              margin: EdgeInsets.only(bottom: 20.0),
+                              child: Text(widget.data["subTopicTitle"] ?? "",
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w500),
+                                  )))),
+                      Container(
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: 22.0,
+                          ))
+                    ]))
+          ],
+        ));
   }
 }
