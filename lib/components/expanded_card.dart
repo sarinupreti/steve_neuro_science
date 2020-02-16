@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steve_beaudoin/models/sub_topics.dart';
-import 'package:steve_beaudoin/screens/details_page.dart';
+import 'package:steve_beaudoin/routes/route.dart';
 
 typedef NavigateTo(String item);
 
@@ -11,10 +11,8 @@ class ExpandedCard extends StatefulWidget {
 
   final Color backgroundColor;
   final Color titleColor;
-  final List<String> subTitles;
-  final List<dynamic> subTopics;
+  final List<SubTopics> subTopics;
   final String assetId;
-  final void Function() navigateTo;
   final bool isActive;
   final Color gradientColor;
   final String imageUrl;
@@ -23,9 +21,7 @@ class ExpandedCard extends StatefulWidget {
       {this.title,
       this.backgroundColor,
       this.titleColor,
-      this.subTitles,
       this.subTopics,
-      this.navigateTo,
       this.isActive,
       this.assetId,
       Key key,
@@ -117,8 +113,9 @@ class _SectionState extends State<ExpandedCard>
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          widget.subTopics.length > 0 ? widget.navigateTo : null;
-          _toggleExpand();
+          if (widget.subTopics != null) {
+            _toggleExpand();
+          }
         },
         child: Container(
             margin: EdgeInsets.only(bottom: 10),
@@ -135,6 +132,9 @@ class _SectionState extends State<ExpandedCard>
                         child: Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
+                                    colorFilter: ColorFilter.mode(
+                                        Colors.black.withOpacity(0.5),
+                                        BlendMode.darken),
                                     fit: BoxFit.cover,
                                     image: NetworkImage(
                                       widget.imageUrl ??
@@ -184,14 +184,9 @@ class _SectionState extends State<ExpandedCard>
                           child: Container(
                               child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: widget.subTopics.map((x) {
-                              print(x);
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: SubTopicList(
-                                  data: x,
-                                ),
+                            children: widget.subTopics.map((dynamic subTopics) {
+                              return SubTopicList(
+                                data: subTopics as SubTopics,
                               );
                             }).toList(),
                           )))
@@ -202,9 +197,9 @@ class _SectionState extends State<ExpandedCard>
 }
 
 class SubTopicList extends StatefulWidget {
-  const SubTopicList({Key key, this.data}) : super(key: key);
+  final SubTopics data;
 
-  final data;
+  const SubTopicList({Key key, this.data}) : super(key: key);
 
   @override
   _SubTopicListState createState() => _SubTopicListState();
@@ -214,24 +209,21 @@ class _SubTopicListState extends State<SubTopicList> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 56.0, right: 20.0, top: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: <Widget>[
             GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DetailsPage()),
-                  );
+                  navigateToTopicDetailsScreen(widget.data);
                 },
                 child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
                           child: Container(
-                              margin: EdgeInsets.only(bottom: 20.0),
-                              child: Text(widget.data["subTopicTitle"] ?? "",
+                              child: Text(widget.data.subTopicTItle ?? "",
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         color: Colors.white,

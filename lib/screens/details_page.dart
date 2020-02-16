@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sailor/sailor.dart';
 import 'package:steve_beaudoin/components/title.dart';
 
+class DetailsPageArguments extends BaseArguments {
+  dynamic subTopics;
+
+  DetailsPageArguments({
+    @required this.subTopics,
+  });
+}
+
 class DetailsPage extends StatelessWidget {
+  final dynamic subTopics;
+
+  const DetailsPage({this.subTopics});
+
   @override
   Widget build(BuildContext context) {
+    print(subTopics);
+
     return MaterialApp(
       home: Scaffold(
         body: CustomScrollView(
