@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sailor/sailor.dart';
 import 'package:steve_beaudoin/routes/routes.dart';
 import 'package:steve_beaudoin/screens/home.dart';
 
@@ -17,11 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
-      onGenerateRoute: Routes.sailor.generator(),
-      navigatorKey: Routes.sailor.navigatorKey,
-      navigatorObservers: [
-        SailorLoggingObserver(),
-      ],
+      onGenerateRoute: AppRoutes().routes,
     );
   }
 }

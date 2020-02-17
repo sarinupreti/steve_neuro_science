@@ -8,11 +8,17 @@ class DatabaseService {
   final Query topicsCollection = firestore.collection("topics");
 
   List<TopicHeader> _getTopicsFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((topic) {
-      Map<String, dynamic> json = topic.data;
+    // final data = snapshot.documents.map((topic) {
+    //   print(topic);
+    //   TopicHeader.fromJson(topic.data["topicHeader"]);
+    // }).toList();
 
-      TopicHeader.fromJson(json["topicHeader"]);
-    }).toList();
+    final data = snapshot.documents
+        .map((x) => TopicHeader.fromJson(x.data["topicHeader"]))
+        .toList();
+
+    print(data);
+    return data;
   }
 
   Stream<List<TopicHeader>> get getAllTopics {

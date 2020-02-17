@@ -6,7 +6,7 @@ import 'package:steve_beaudoin/components/expanded_card.dart';
 import 'package:steve_beaudoin/components/title.dart';
 import 'package:steve_beaudoin/database/database.dart';
 import 'package:steve_beaudoin/models/topics.dart';
-import 'package:steve_beaudoin/routes/route.dart';
+import 'package:steve_beaudoin/screens/notifications/notification_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -43,7 +43,8 @@ class _HomePageState extends State<HomePage> {
         ),
         leading: InkWell(
           onTap: () {
-            navigateToNotificationScreen();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => NotificationScreen()));
           },
           child: Icon(
             FontAwesome.bell_o,

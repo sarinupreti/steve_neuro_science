@@ -11,9 +11,7 @@ TopicHeader _$TopicHeaderFromJson(Map json) {
     id: json['id'] as int,
     description: json['description'] as String,
     imageUrl: json['imageUrl'] as String,
-    subTopics: (json['subTopics'] as List)
-        .map((e) => SubTopics.fromJson(e as Map))
-        .toList(),
+    subTopics: json['subTopics'] as List,
     title: json['title'] as String,
   );
 }

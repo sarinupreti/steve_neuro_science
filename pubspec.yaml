@@ -25,8 +25,9 @@ dependencies:
   flutter_offline: ^0.3.0
   flutter_screenutil: ^1.0.2
   cloud_firestore: ^0.13.2+1
-  sailor: ^0.6.0
   json_annotation: ^3.0.1
+  cached_network_image: ^2.0.0
+  shimmer: ^1.0.1
 
 dev_dependencies:
   flutter_test:

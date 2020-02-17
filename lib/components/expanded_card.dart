@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:steve_beaudoin/models/sub_topics.dart';
-import 'package:steve_beaudoin/routes/route.dart';
+import 'package:steve_beaudoin/screens/details_page.dart';
 
 typedef NavigateTo(String item);
 
@@ -11,7 +10,7 @@ class ExpandedCard extends StatefulWidget {
 
   final Color backgroundColor;
   final Color titleColor;
-  final List<SubTopics> subTopics;
+  final List<dynamic> subTopics;
   final String assetId;
   final bool isActive;
   final Color gradientColor;
@@ -184,9 +183,9 @@ class _SectionState extends State<ExpandedCard>
                           child: Container(
                               child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: widget.subTopics.map((dynamic subTopics) {
+                            children: widget.subTopics.map((subTopics) {
                               return SubTopicList(
-                                data: subTopics as SubTopics,
+                                data: Map<String, dynamic>.from(subTopics),
                               );
                             }).toList(),
                           )))
@@ -197,7 +196,7 @@ class _SectionState extends State<ExpandedCard>
 }
 
 class SubTopicList extends StatefulWidget {
-  final SubTopics data;
+  final Map<String, dynamic> data;
 
   const SubTopicList({Key key, this.data}) : super(key: key);
 
@@ -215,7 +214,11 @@ class _SubTopicListState extends State<SubTopicList> {
             GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
-                  navigateToTopicDetailsScreen(widget.data);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DetailsPage(subTopics: widget.data)));
                 },
                 child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -223,13 +226,17 @@ class _SubTopicListState extends State<SubTopicList> {
                     children: [
                       Expanded(
                           child: Container(
-                              child: Text(widget.data.subTopicTItle ?? "",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w500),
-                                  )))),
+                              child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 0),
+                        child: Text(widget.data["subTopicTitle"] ?? "",
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w500),
+                            )),
+                      ))),
                       Container(
                           alignment: Alignment.center,
                           child: Icon(

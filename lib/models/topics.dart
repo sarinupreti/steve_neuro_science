@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:steve_beaudoin/models/sub_topics.dart';
 
 part 'topics.g.dart';
 
@@ -11,15 +10,25 @@ class TopicHeader {
   final String description;
   @required
   final String imageUrl;
-  final List<SubTopics> subTopics;
+  final List<dynamic> subTopics;
   @required
   final String title;
 
   TopicHeader(
       {this.id, this.description, this.imageUrl, this.subTopics, this.title});
 
-  factory TopicHeader.fromJson(Map<String, dynamic> json) {
-    return _$TopicHeaderFromJson(json);
+  factory TopicHeader.fromJson(Map<dynamic, dynamic> json) {
+    final data = TopicHeader(
+        id: json["id"],
+        description: json["description"],
+        imageUrl: json["imageUrl"],
+        subTopics: (json['subTopics'] as List)
+            ?.map((e) => e == null ? null : (e))
+            ?.toList(),
+        title: json["title"]);
+
+    print(data);
+    return data;
   }
 
   Map<String, dynamic> toJson() => _$TopicHeaderToJson(this);

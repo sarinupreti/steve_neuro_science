@@ -1,44 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:sailor/sailor.dart';
-import 'package:steve_beaudoin/routes/route.dart';
-import 'package:steve_beaudoin/screens/details_page.dart';
-import 'package:steve_beaudoin/screens/home.dart';
-import 'package:steve_beaudoin/screens/notifications/notification_screen.dart';
+import 'package:steve_beaudoin/routes/navigation_routes.dart';
+import 'package:steve_beaudoin/routes/routes_name.dart';
 
-class Routes {
-  static final sailor = Sailor();
+/// [AppRoutes] class is used to handle all routes related stuffs along with setups before launching pages.
+class AppRoutes {
+  //
+  AppRoutes();
 
-  static void createRoutes() {
-    sailor.addRoutes([
-      // Just for good measure, we won't explicitly navigate to the InitialPage.
-      SailorRoute(
-        name: homeScreen,
-        builder: (context, args, params) {
-          return HomePage();
-        },
-      ),
-      SailorRoute(
-        name: notificationScreen,
-        builder: (context, args, params) {
-          return NotificationScreen();
-        },
-      ),
-      SailorRoute(
-        name: topicInformationScreen,
-        builder: (context, args, params) {
-          return DetailsPage(
-            subTopics: args,
-          );
-        },
-      ),
-    ]);
-    SailorOptions(
-      defaultTransitions: [
-        SailorTransition.slide_from_bottom,
-        SailorTransition.zoom_in,
-      ],
-      defaultTransitionCurve: Curves.decelerate,
-      defaultTransitionDuration: Duration(milliseconds: 100),
-    );
+  /// Function [routes] used switch case to handle route request.
+  Route routes(RouteSettings settings) {
+    NavigationRoutes _navigationRoutes;
+
+    switch (settings.name) {
+      case homePageRoute:
+        return _navigationRoutes.openHomeScreen(settings);
+        break;
+
+      case notificationScreenRoute:
+        return _navigationRoutes.openNotificationsScreen(settings);
+        break;
+
+      case detailsPageRoute:
+        return _navigationRoutes.openDetailsScreen(settings);
+        break;
+
+      default:
+        throw Exception('Invalid route: ${settings.name}');
+    }
   }
+
+  //
 }

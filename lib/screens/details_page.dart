@@ -1,15 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sailor/sailor.dart';
+import 'package:steve_beaudoin/components/shimmer.dart';
 import 'package:steve_beaudoin/components/title.dart';
-
-class DetailsPageArguments extends BaseArguments {
-  dynamic subTopics;
-
-  DetailsPageArguments({
-    @required this.subTopics,
-  });
-}
 
 class DetailsPage extends StatelessWidget {
   final dynamic subTopics;
@@ -36,16 +29,34 @@ class DetailsPage extends StatelessWidget {
               elevation: 0,
               backgroundColor: Colors.transparent,
               flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Text('',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 16.0,
-                      )),
-                  background: Image.network(
-                    "https://static1.squarespace.com/static/56df0f29a3360c18d09a4e8c/591dcd0ef5e231aa972579e8/5bd8be6940ec9ab5572f5e12/1540933145337/brain.gif?format=1500w",
-                    fit: BoxFit.cover,
-                  )),
+                centerTitle: true,
+                // title: Text(subTopics["subTopicTitle"],
+                //     style: TextStyle(
+                //       color: Colors.grey,
+                //       fontSize: 16.0,
+                //     )),
+                background: CachedNetworkImage(
+                  imageUrl: subTopics['images'][0] ?? "",
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                              Colors.red, BlendMode.colorBurn)),
+                    ),
+                  ),
+                  placeholder: (context, url) => CustomShimmer(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+                // Image.network(
+                //   subTopics['images'][0],
+                //   fit: BoxFit.cover,
+                // )
+              ),
             ),
             new SliverList(
                 delegate: new SliverChildListDelegate(<Widget>[
@@ -57,12 +68,12 @@ class DetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       TItle(
-                        title: "Neuro Science",
+                        title: subTopics["subTopicTitle"],
                         titleColor: Colors.black,
                       ),
                       SizedBox(height: 20),
                       Text(
-                        "Neuroscience (or neurobiology) is the scientific study of the nervous system. It is a multidisciplinary branch of biology that combines physiology, anatomy, molecular biology, developmental biology, cytology, mathematical modeling, and psychology to understand the fundamental and emergent properties of neurons and neural circuits.The understanding of the biological basis of learning, memory, behavior, perception, and consciousness has been described by Eric Kandel as the ultimate challenge of the biological sciences. The scope of neuroscience has broadened over time to include different approaches used to study the nervous system at different scales and the techniques used by neuroscientists have expanded enormously, from molecular and cellular studies of individual neurons to imaging of sensory, motor and cognitive tasks in the brain.",
+                        subTopics["description"],
                         textDirection: TextDirection.ltr,
                         style: GoogleFonts.poppins(
                             textStyle:
@@ -72,32 +83,36 @@ class DetailsPage extends StatelessWidget {
                       Container(
                         height: 200,
                         width: MediaQuery.of(context).size.width,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            Image.network(
-                              "https://d1t0xk6rn1avc6.cloudfront.net/wp-content/uploads/STRESS-750x450.jpg",
-                              height: 200,
-                              fit: BoxFit.cover,
-                            ),
-                            SizedBox(width: 10),
-                            Image.network(
-                              "https://d1t0xk6rn1avc6.cloudfront.net/wp-content/uploads/STRESS-750x450.jpg",
-                              height: 200,
-                              fit: BoxFit.cover,
-                            ),
-                            SizedBox(width: 10),
-                            Image.network(
-                              "https://d1t0xk6rn1avc6.cloudfront.net/wp-content/uploads/STRESS-750x450.jpg",
-                              height: 200,
-                              fit: BoxFit.cover,
-                            )
-                          ],
-                        ),
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 3,
+                            itemBuilder: (context, i) {
+                              return CachedNetworkImage(
+                                imageUrl: subTopics['images'][i] ?? "",
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                        colorFilter: ColorFilter.mode(
+                                            Colors.red, BlendMode.colorBurn)),
+                                  ),
+                                ),
+                                placeholder: (context, url) => CustomShimmer(
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              );
+                            }),
                       ),
                       SizedBox(height: 20),
                       Text(
-                        "Neuroscience (or neurobiology) is the scientific study of the nervous system. It is a multidisciplinary branch of biology that combines physiology, anatomy, molecular biology, developmental biology, cytology, mathematical modeling, and psychology to understand the fundamental and emergent properties of neurons and neural circuits.The understanding of the biological basis of learning, memory, behavior, perception, and consciousness has been described by Eric Kandel as the ultimate challenge of the biological sciences. The scope of neuroscience has broadened over time to include different approaches used to study the nervous system at different scales and the techniques used by neuroscientists have expanded enormously, from molecular and cellular studies of individual neurons to imaging of sensory, motor and cognitive tasks in the brain.",
+                        subTopics["description"],
                         textDirection: TextDirection.ltr,
                         style: GoogleFonts.poppins(
                             textStyle:
