@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steve_beaudoin/components/shimmer.dart';
-import 'package:steve_beaudoin/screens/details_page.dart';
+import 'package:steve_beaudoin/screens/topic_details/details_page.dart';
 
 typedef NavigateTo(String item);
 

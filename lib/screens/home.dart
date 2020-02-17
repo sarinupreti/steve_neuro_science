@@ -7,6 +7,7 @@ import 'package:steve_beaudoin/components/title.dart';
 import 'package:steve_beaudoin/database/database.dart';
 import 'package:steve_beaudoin/models/topics.dart';
 import 'package:steve_beaudoin/screens/notifications/notification_screen.dart';
+import 'package:steve_beaudoin/screens/search/search_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -49,10 +50,16 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Icon(
-              FontAwesome.search,
-              color: Colors.grey,
-              size: 20,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchScreen()));
+              },
+              child: Icon(
+                FontAwesome.search,
+                color: Colors.grey,
+                size: 20,
+              ),
             ),
           ),
         ],

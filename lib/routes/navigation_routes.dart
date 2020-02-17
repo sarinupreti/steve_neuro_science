@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:steve_beaudoin/screens/details_page.dart';
 import 'package:steve_beaudoin/screens/home.dart';
 import 'package:steve_beaudoin/screens/notifications/notification_screen.dart';
+import 'package:steve_beaudoin/screens/search/search_screen.dart';
+import 'package:steve_beaudoin/screens/topic_details/details_page.dart';
 
 class NavigationRoutes {
   MaterialPageRoute openHomeScreen(RouteSettings settings) {
@@ -24,6 +25,14 @@ class NavigationRoutes {
     return MaterialPageRoute<dynamic>(
       builder: (BuildContext context) {
         return DetailsPage(subTopics: settings.arguments);
+      },
+    );
+  }
+
+  MaterialPageRoute openSearchScreen(RouteSettings settings) {
+    return MaterialPageRoute<dynamic>(
+      builder: (BuildContext context) {
+        return SearchScreen();
       },
     );
   }

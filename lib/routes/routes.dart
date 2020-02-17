@@ -24,6 +24,10 @@ class AppRoutes {
         return _navigationRoutes.openDetailsScreen(settings);
         break;
 
+      case searchScreenRoute:
+        return _navigationRoutes.openSearchScreen(settings);
+        break;
+
       default:
         throw Exception('Invalid route: ${settings.name}');
     }
