@@ -16,13 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Stream<List<TopicHeader>> getAllTopics;
-
-  @override
-  void initState() {
-    getAllTopics = DatabaseService().getAllTopics;
-    super.initState();
-  }
+  Stream<List<TopicHeader>> getAllTopics = DatabaseService().getAllTopics;
 
   @override
   Widget build(BuildContext context) {

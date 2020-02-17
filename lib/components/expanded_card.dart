@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:steve_beaudoin/components/shimmer.dart';
 import 'package:steve_beaudoin/screens/details_page.dart';
 
 typedef NavigateTo(String item);
@@ -126,27 +128,24 @@ class _SectionState extends State<ExpandedCard>
                 child: Stack(
                   children: <Widget>[
                     Positioned.fill(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    colorFilter: ColorFilter.mode(
-                                        Colors.black.withOpacity(0.5),
-                                        BlendMode.darken),
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      widget.imageUrl ??
-                                          "https://static1.squarespace.com/static/56df0f29a3360c18d09a4e8c/591dcd0ef5e231aa972579e8/5bd8be6940ec9ab5572f5e12/1540933145337/brain.gif?format=1500w",
-                                    )),
-                                gradient: LinearGradient(
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    colors: widget.gradientColor ??
-                                        [
-                                          Color(0xffEE0979),
-                                          Color(0xffFF6A00)
-                                        ])))),
+                      left: 0,
+                      top: 0,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.imageUrl ?? "",
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.5),
+                                    BlendMode.darken)),
+                          ),
+                        ),
+                        placeholder: (context, url) => CustomShimmer(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),
                     Column(children: <Widget>[
                       Container(
                           height: 150.0,

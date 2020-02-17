@@ -13,8 +13,11 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     print(subTopics);
 
+    final images = subTopics["images"];
+
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -22,7 +25,6 @@ class DetailsPage extends StatelessWidget {
               leading: IconButton(
                   icon: Icon(Icons.arrow_back_ios),
                   onPressed: () {
-                    // Do something
                     Navigator.pop(context);
                   }),
               expandedHeight: MediaQuery.of(context).size.height / 3,
@@ -30,94 +32,110 @@ class DetailsPage extends StatelessWidget {
               backgroundColor: Colors.transparent,
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
-                // title: Text(subTopics["subTopicTitle"],
-                //     style: TextStyle(
-                //       color: Colors.grey,
-                //       fontSize: 16.0,
-                //     )),
                 background: CachedNetworkImage(
-                  imageUrl: subTopics['images'][0] ?? "",
+                  imageUrl:
+                      images != null && images.length > 0 ? images[0] : "",
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           image: imageProvider,
                           fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(
-                              Colors.red, BlendMode.colorBurn)),
+                          colorFilter:
+                              ColorFilter.mode(Colors.red, BlendMode.color)),
                     ),
                   ),
                   placeholder: (context, url) => CustomShimmer(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => CustomShimmer(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                  ),
                 ),
-                // Image.network(
-                //   subTopics['images'][0],
-                //   fit: BoxFit.cover,
-                // )
               ),
             ),
             new SliverList(
                 delegate: new SliverChildListDelegate(<Widget>[
               Container(
-                  padding: EdgeInsets.all(20),
+                  // margin: EdgeInsets.all(20),
                   color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TItle(
-                        title: subTopics["subTopicTitle"],
-                        titleColor: Colors.black,
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: TItle(
+                          title: subTopics["subTopicTitle"],
+                          titleColor: Colors.black,
+                        ),
                       ),
                       SizedBox(height: 20),
-                      Text(
-                        subTopics["description"],
-                        textDirection: TextDirection.ltr,
-                        style: GoogleFonts.poppins(
-                            textStyle:
-                                TextStyle(color: Colors.black, fontSize: 16)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Text(
+                          subTopics["description"],
+                          textDirection: TextDirection.ltr,
+                          style: GoogleFonts.poppins(
+                              textStyle:
+                                  TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        height: 200,
-                        width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 3,
-                            itemBuilder: (context, i) {
-                              return CachedNetworkImage(
-                                imageUrl: subTopics['images'][i] ?? "",
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  height: 200,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                        colorFilter: ColorFilter.mode(
-                                            Colors.red, BlendMode.colorBurn)),
-                                  ),
-                                ),
-                                placeholder: (context, url) => CustomShimmer(
-                                  height: 200,
-                                  width: MediaQuery.of(context).size.width,
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
-                              );
-                            }),
+                      images != null && images.length > 0
+                          ? Container(
+                              height: 200,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.separated(
+                                  separatorBuilder: (context, i) {
+                                    return Center(
+                                      child: Icon(Icons.arrow_right,
+                                          color: Colors.white),
+                                    );
+                                  },
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: images.length,
+                                  itemBuilder: (context, i) {
+                                    return CachedNetworkImage(
+                                      imageUrl: subTopics['images'][i] ?? "",
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        height: 200,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                  Colors.red, BlendMode.color)),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) =>
+                                          CustomShimmer(
+                                        height: 200,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    );
+                                  }),
+                            )
+                          : SizedBox(height: 0, width: 0),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Text(
+                          subTopics["description"],
+                          textDirection: TextDirection.ltr,
+                          style: GoogleFonts.poppins(
+                              textStyle:
+                                  TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
                       ),
                       SizedBox(height: 20),
-                      Text(
-                        subTopics["description"],
-                        textDirection: TextDirection.ltr,
-                        style: GoogleFonts.poppins(
-                            textStyle:
-                                TextStyle(color: Colors.black, fontSize: 16)),
-                      ),
                     ],
                   )),
             ])),
