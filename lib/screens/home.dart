@@ -89,18 +89,18 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(builder: (context) => MapsScreen()));
               },
             ),
-            ListTile(
-              title: Text("title 1"),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text("title 1"),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text("title 1"),
-              onTap: () {},
-            ),
+            // ListTile(
+            //   title: Text("title 1"),
+            //   onTap: () {},
+            // ),
+            // ListTile(
+            //   title: Text("title 1"),
+            //   onTap: () {},
+            // ),
+            // ListTile(
+            //   title: Text("title 1"),
+            //   onTap: () {},
+            // ),
           ],
         ),
       ),
