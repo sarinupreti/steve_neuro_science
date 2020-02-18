@@ -8,6 +8,7 @@ import 'package:steve_beaudoin/components/search_widget.dart';
 import 'package:steve_beaudoin/components/title.dart';
 import 'package:steve_beaudoin/database/database.dart';
 import 'package:steve_beaudoin/models/topics.dart';
+import 'package:steve_beaudoin/screens/maps/maps_screen.dart';
 import 'package:steve_beaudoin/screens/notifications/notification_screen.dart';
 import 'package:steve_beaudoin/screens/search/search_screen.dart';
 
@@ -81,8 +82,12 @@ class _HomePageState extends State<HomePage> {
               height: 200,
             ),
             ListTile(
-              title: Text("title 1"),
-              onTap: () {},
+              title: Text("Nearby Places"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MapsScreen()));
+              },
             ),
             ListTile(
               title: Text("title 1"),
