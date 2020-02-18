@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steve_beaudoin/components/shimmer.dart';
 import 'package:steve_beaudoin/components/title.dart';
@@ -87,42 +88,40 @@ class DetailsPage extends StatelessWidget {
                           ? Container(
                               height: 200,
                               width: MediaQuery.of(context).size.width,
-                              child: ListView.separated(
-                                  separatorBuilder: (context, i) {
-                                    return Center(
-                                      child: Icon(Icons.arrow_right,
-                                          color: Colors.white),
-                                    );
-                                  },
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: images.length,
-                                  itemBuilder: (context, i) {
-                                    return CachedNetworkImage(
-                                      imageUrl: subTopics['images'][i] ?? "",
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                        height: 200,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                              colorFilter: ColorFilter.mode(
-                                                  Colors.red, BlendMode.color)),
-                                        ),
+                              child: Swiper(
+                                autoplay: true,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return CachedNetworkImage(
+                                    imageUrl: subTopics['images'][i] ?? "",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      height: 200,
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                            colorFilter: ColorFilter.mode(
+                                                Colors.red, BlendMode.color)),
                                       ),
-                                      placeholder: (context, url) =>
-                                          CustomShimmer(
-                                        height: 200,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
-                                    );
-                                  }),
-                            )
+                                    ),
+                                    placeholder: (context, url) =>
+                                        CustomShimmer(
+                                      height: 200,
+                                      width: MediaQuery.of(context).size.width,
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                  );
+                                },
+                                itemCount: images.length,
+                                pagination: new SwiperPagination(
+                                    builder: new DotSwiperPaginationBuilder(
+                                        activeColor: Colors.white,
+                                        color: Colors.white.withOpacity(0.5))),
+                                control: new SwiperControl(
+                                    color: Colors.white.withOpacity(0.5)),
+                              ))
                           : SizedBox(height: 0, width: 0),
                       SizedBox(height: 20),
                       Padding(
