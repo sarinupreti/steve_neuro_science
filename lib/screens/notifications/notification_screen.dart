@@ -61,64 +61,80 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
           Expanded(
             child: Scaffold(
+              backgroundColor: Colors.white,
+              appBar: AppBar(
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                    )),
                 backgroundColor: Colors.white,
-                appBar: AppBar(
-                  leading: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.black,
-                      )),
-                  backgroundColor: Colors.white,
-                  brightness: connected ? Brightness.light : Brightness.dark,
-                  elevation: 0,
-                  iconTheme: IconThemeData(
-                    color: UIColors.mediumGray,
-                  ),
-                  actions: <Widget>[
-                    InkWell(
-                      onTap: () {},
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: UISize.width(16)),
-                          child:
-                              Text("Clear", style: StyleText.mediumDarkGrey20),
-                        ),
+                brightness: connected ? Brightness.light : Brightness.dark,
+                elevation: 0,
+                iconTheme: IconThemeData(
+                  color: UIColors.mediumGray,
+                ),
+                actions: <Widget>[
+                  InkWell(
+                    onTap: () {},
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: UISize.width(16)),
+                        child: Text("Clear", style: StyleText.mediumDarkGrey20),
                       ),
-                    )
+                    ),
+                  )
+                ],
+              ),
+              body:
+                  // SingleChildScrollView(
+                  //   child: Wrap(
+                  //     children: <Widget>[
+                  //       Padding(
+                  //         padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                  //         child: TItle(title: "Notifications"),
+                  //       ),
+                  //       ListView.builder(
+                  //         shrinkWrap: true,
+                  //         physics: NeverScrollableScrollPhysics(),
+                  //         itemCount: 100,
+                  //         itemBuilder: (BuildContext context, int index) {
+                  //           return notificationItem(context);
+                  //         },
+                  //       )
+                  //     ],
+                  //   ),
+                  // )
+
+                  SingleChildScrollView(
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                      child: TItle(title: "Notifications"),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 100,
+                          itemBuilder: (BuildContext context, int index) {
+                            return notificationItem(context);
+                          },
+                        )
+                      ],
+                    ),
                   ],
                 ),
-                body: Container(
-                  padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TItle(title: "Notifications"),
-                      Expanded(
-                        child: Container(
-                          child: ListView(
-                            children: <Widget>[
-                              notificationItem(context),
-                              notificationItem(context),
-                              notificationItem(context),
-                              notificationItem(context),
-                              notificationItem(context),
-                              notificationItem(context),
-                              notificationItem(context),
-                              notificationItem(context),
-                              notificationItem(context),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                )),
+              ),
+            ),
           )
         ]);
       },
@@ -126,46 +142,42 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  Padding notificationItem(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        width: MediaQuery.of(context).size.width - 50,
-        child: Card(
-          color: UIColors.white,
-          elevation: 5,
-          child: Row(
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 16),
-                    child: Text("Notification 1 ",
-                        maxLines: 3,
-                        style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 10.0, left: 16, right: 16),
-                    child: Text("this is a test message",
-                        maxLines: 5,
-                        style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300))),
-                  )
-                ],
-              ),
-            ],
-          ),
+  notificationItem(BuildContext context) {
+    return Container(
+      color: UIColors.white,
+      child: Card(
+        color: UIColors.white,
+        child: Row(
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 16),
+                  child: Text("Notification 1 ",
+                      maxLines: 3,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold))),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 10.0, left: 16, right: 16),
+                  child: Text("this is a test message",
+                      maxLines: 5,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300))),
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );
