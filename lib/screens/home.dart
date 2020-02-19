@@ -5,6 +5,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steve_beaudoin/components/expanded_card.dart';
 import 'package:steve_beaudoin/components/search_widget.dart';
+import 'package:steve_beaudoin/components/shimmer.dart';
 import 'package:steve_beaudoin/components/title.dart';
 import 'package:steve_beaudoin/database/database.dart';
 import 'package:steve_beaudoin/models/topics.dart';
@@ -22,18 +23,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Stream<List<TopicHeader>> getAllTopics = DatabaseService().getAllTopics;
 
+  List<TopicHeader> topic;
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
         width: 1080, height: 1920, allowFontScaling: false);
-
-    List<Person> people = [
-      Person('Mike', 'Barron', 64),
-      Person('Todd', 'Black', 30),
-      Person('Ahmad', 'Edwards', 55),
-      Person('Anthony', 'Johnson', 67),
-      Person('Annette', 'Brooks', 39),
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -63,7 +58,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: InkWell(
               onTap: () {
-                showSearchScreen(context, people);
+                showSearchScreen(context, topic);
               },
               child: Icon(
                 FontAwesome.search,
@@ -140,7 +135,16 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 final collectionData = snapshot.data;
 
-                                print(collectionData);
+                                topic = [
+                                  TopicHeader(
+                                      id: collectionData[index].id,
+                                      description:
+                                          collectionData[index].description,
+                                      imageUrl: collectionData[index].imageUrl,
+                                      subTopics:
+                                          collectionData[index].subTopics,
+                                      title: collectionData[index].title),
+                                ];
 
                                 return ExpandedCard(
                                   title: collectionData[index].title ?? "",
@@ -163,11 +167,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<Person> showSearchScreen(BuildContext context, List<Person> people) {
+  Future<TopicHeader> showSearchScreen(
+      BuildContext context, List<TopicHeader> topic) {
     return showSearch(
       context: context,
-      delegate: SearchPage<Person>(
-        items: people,
+      delegate: SearchPage<TopicHeader>(
+        items: topic,
         barTheme: ThemeData(
           primaryColor: Colors.white,
         ),
@@ -176,17 +181,16 @@ class _HomePageState extends State<HomePage> {
           child: Text('Filter topics by name, sub-topics, types, date.'),
         ),
         failure: Center(
-          child: Text('No person found :('),
+          child: Text('No topic found :('),
         ),
-        filter: (person) => [
-          person.name,
-          person.surname,
-          person.age.toString(),
-        ],
-        builder: (person) => ListTile(
-          title: Text(person.name),
-          subtitle: Text(person.surname),
-          trailing: Text('${person.age} yo'),
+        filter: (t) => [t.title, t.description, t.subTopics.toString()],
+        builder: (t) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: ListTile(
+            leading: Image.network(t.imageUrl),
+            title: Text(t.subTopics.map((e) => e["subTopicTitle"]).toString()),
+            subtitle: Text(t.description),
+          ),
         ),
       ),
     );
