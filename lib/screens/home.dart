@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -187,9 +188,19 @@ class _HomePageState extends State<HomePage> {
         builder: (t) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: ListTile(
-            leading: Image.network(t.imageUrl),
-            title: Text(t.subTopics.map((e) => e["subTopicTitle"]).toString()),
-            subtitle: Text(t.description),
+            leading: CachedNetworkImage(
+              imageUrl: t.imageUrl ?? "",
+              placeholder: (context, url) => CustomShimmer(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+            title: Text(
+              t.subTopics.map((e) => e["subTopicTitle"]).toString(),
+              maxLines: 1,
+            ),
+            subtitle: Text(
+              t.description,
+              maxLines: 1,
+            ),
           ),
         ),
       ),
