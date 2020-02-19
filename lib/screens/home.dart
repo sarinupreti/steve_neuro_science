@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +11,6 @@ import 'package:steve_beaudoin/database/database.dart';
 import 'package:steve_beaudoin/models/topics.dart';
 import 'package:steve_beaudoin/screens/maps/maps_screen.dart';
 import 'package:steve_beaudoin/screens/notifications/notification_screen.dart';
-import 'package:steve_beaudoin/screens/search/search_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);

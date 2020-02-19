@@ -66,8 +66,8 @@ class SearchPage<T> extends SearchDelegate<T> {
     return barTheme ??
         Theme.of(context).copyWith(
           textTheme: TextTheme(
-            title: TextStyle(
-              color: Theme.of(context).primaryTextTheme.title.color,
+            headline5: TextStyle(
+              color: Theme.of(context).primaryTextTheme.headline5.color,
               fontSize: 20,
             ),
           ),

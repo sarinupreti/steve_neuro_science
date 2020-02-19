@@ -32,6 +32,8 @@ dependencies:
   floating_search_bar: ^0.3.0
   firebase_messaging: ^6.0.9
   google_maps_flutter: ^0.5.23+1
+  location: ^2.4.0
+  location_permissions: ^2.0.4+1
 
 dev_dependencies:
   flutter_test:
