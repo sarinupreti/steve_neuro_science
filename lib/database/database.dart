@@ -7,6 +7,7 @@ class DatabaseService {
   static Firestore firestore = Firestore.instance;
 
   final Query topicsCollection = firestore.collection("topics");
+  final Query locationCollection = firestore.collection("locations");
 
   List<TopicHeader> _getTopicsFromSnapshot(QuerySnapshot snapshot) {
     // final data = snapshot.documents.map((topic) {
@@ -24,7 +25,9 @@ class DatabaseService {
 
   List<LocationInfo> _getLocationFromSnapshot(QuerySnapshot snapshot) {
     final data = snapshot.documents
-        .map((x) => LocationInfo.fromJson(x.data["locationInfo"]))
+        .map((x) => LocationInfo.fromJson(
+              x.data,
+            ))
         .toList();
 
     print(data);
@@ -36,6 +39,6 @@ class DatabaseService {
   }
 
   Stream<List<LocationInfo>> get getAllLocations {
-    return topicsCollection.snapshots().map(_getLocationFromSnapshot);
+    return locationCollection.snapshots().map(_getLocationFromSnapshot);
   }
 }

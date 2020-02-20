@@ -10,7 +10,8 @@ LocationInfo _$LocationInfoFromJson(Map json) {
   return LocationInfo(
     id: json['id'] as int,
     description: json['description'] as String,
-    location: (json['location'] as num).toDouble(),
+    latitude: (json['latitude'] as num).toDouble(),
+    longitude: (json['longitude'] as num).toDouble(),
     name: json['name'] as String,
   );
 }
@@ -18,7 +19,8 @@ LocationInfo _$LocationInfoFromJson(Map json) {
 Map<String, dynamic> _$LocationInfoToJson(LocationInfo instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'location': instance.location,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
       'name': instance.name,
       'description': instance.description,
     };
